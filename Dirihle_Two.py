@@ -48,14 +48,40 @@ class Dirihle_sub:
 
     def solve_sistem(self, w, epoches):
         R = (self.h - 2) ** 2
-        U = self.U[1:self.h - 1, 1:self.h - 1].reshape(R)
-        F = self.F[1:self.h - 1, 1:self.h - 1].reshape(R)
         A = np.zeros((R, R))
         A[np.arange(R), np.arange(R)] = -4
         A[np.arange(R - 1), np.arange(1, R)] = 1
         A[np.arange(1, R), np.arange(R - 1)] = 1
         A[np.arange(R - self.h), np.arange(self.h, R)] = 1
         A[np.arange(self.h, R), np.arange(R - self.h)] = 1
+        U = self.U[1:self.h - 1, 1:self.h - 1]
+        near_y = []
+        for i, row in enumerate(U):
+            for j, col in enumerate(row):
+                y_mas = []
+                if j == 0:
+                    prev_y = 0
+                else:
+                    prev_y = 1
+                if j == 2:
+                    next_y = 0
+                else:
+                    next_y = 1
+                y_mas.append(prev_y)
+                y_mas.append(next_y)
+                near_y.append(y_mas)
+        for i in range(1, R - 1):
+            if near_y[i][0] == 0:
+                A[i][i - 1] = 0
+            else:
+                A[i][i - 1] = 1
+            if near_y[i][1] == 0:
+                A[i][i + 1] = 0
+            else:
+                A[i][i + 1] = 1
+
+        U = self.U[1:self.h - 1, 1:self.h - 1].reshape(R)
+        F = self.F[1:self.h - 1, 1:self.h - 1].reshape(R)
 
         L, D, r = self.LDR_decompose(A, R)
         B = D + w * L
