@@ -1,6 +1,6 @@
 import numpy as np
 import math
-
+import matplotlib.pyplot as plt
 
 class Dirihle_sub:
 
@@ -115,3 +115,19 @@ class Dirihle_sub:
             for j, col in enumerate(A):
                 R[i, j] = np.dot(row, col)
         return Q.T, R
+
+
+    """Строим график"""
+
+
+    def show_grafic(self):
+        x = np.linspace(self.min, self.max, self.h)
+        y = np.linspace(self.min, self.max, self.h)
+        X, Y = np.meshgrid(x, y)
+        Z = self.U
+
+        fig = plt.figure()
+        ax = plt.axes(projection='3d')
+        ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='viridis')
+
+        plt.show()

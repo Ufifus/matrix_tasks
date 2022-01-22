@@ -1,4 +1,5 @@
 import Dirihle_One, Dirihle_Two, Eign_Values
+import matplotlib.pyplot as plt
 import time
 import numpy as np
 
@@ -14,6 +15,7 @@ test = Dirihle_One.Dirihle_sub(h, min, max)
 test.init_net()
 test.create_compute_net()
 result = test.solve_sistem()
+test.show_grafic()
 print('Дирихле конечными')
 print(result)
 
@@ -26,6 +28,7 @@ test = Dirihle_Two.Dirihle_sub(h, min, max)
 test.init_net()
 test.create_compute_net()
 result = test.solve_sistem(1.5, 10)   #Выбираем константу и кол-во идераций
+test.show_grafic()
 print('Дирихле МВР')
 print(result)
 
