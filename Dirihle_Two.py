@@ -33,15 +33,20 @@ class Dirihle_sub:
     """Создаем расчетную сетку для внутренних значений"""
 
     def create_compute_net(self):
+        """Вводим матрицу g которая вычтет крайние значения из нашей ф-и во внутренних точка"""
         R = self.h ** 2
         g = np.zeros(R)
-        g[:R] -= np.dot(self.U[:R], 4)
+        """вычитаем крайние точки по оси у которые j+1"""
         g[:R - 1] += self.U[1:R]
+        """вычитаем крайние точки по оси y которые j-1"""
         g[1:R] += self.U[:R - 1]
+        """вычитаем крайние точки по оси x которые i+1"""
         g[:R - self.h] += self.U[self.h:R]
+        """вычитаем крайние точки по оси x которые i-1"""
         g[self.h:R] += self.U[:R - self.h]
 
         self.U = np.array(self.U).reshape(self.h, self.h)
+        """вычитаем наши крайние точки из F"""
         self.F = self.F - g
         self.F = np.array(self.F).reshape(self.h, self.h)
 
@@ -53,8 +58,8 @@ class Dirihle_sub:
         A[np.arange(R), np.arange(R)] = -4
         A[np.arange(R - 1), np.arange(1, R)] = 1
         A[np.arange(1, R), np.arange(R - 1)] = 1
-        A[np.arange(R - self.h), np.arange(self.h, R)] = 1
-        A[np.arange(self.h, R), np.arange(R - self.h)] = 1
+        A[np.arange(R - self.h+2), np.arange(self.h-2, R)] = 1
+        A[np.arange(self.h-2, R), np.arange(R - self.h+2)] = 1
         U = self.U[1:self.h - 1, 1:self.h - 1]
         near_y = []
         for i, row in enumerate(U):

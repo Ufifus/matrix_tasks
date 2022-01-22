@@ -43,7 +43,7 @@ S = np.dot(A.T, A)
 epoches = 10  #кол-во иттераций
 
 test = Eign_Values.Find_eign_values(S)
-print(np.linalg.eigvals(S))
+print('Собтвенные значения матрицы - ', np.linalg.eigvals(S))
 print('Максимальное и минимальное собственные значения')
 print(test.find_max(epoches))
 print(test.find_min(epoches, 0.1))
