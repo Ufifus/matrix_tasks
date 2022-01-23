@@ -45,5 +45,5 @@ epoches = 10  #кол-во иттераций
 test = Eign_Values.Find_eign_values(S)
 print('Собтвенные значения матрицы - ', np.linalg.eigvals(S))
 print('Максимальное и минимальное собственные значения')
-print(test.find_max(epoches))
-print(test.find_min(epoches, 0.1))
+print(test.find_max(epoches, 10))
+print(test.find_min(epoches, 0.1, 10))
